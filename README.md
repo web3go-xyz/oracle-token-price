@@ -1,2 +1,2 @@
 # oracle-token-price
-service to fetch  token price from trade market
+service to fetch  token price from trade market ( Binance )
