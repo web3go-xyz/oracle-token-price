@@ -19,7 +19,7 @@ import { PriceHistory } from './priceModule/entity/price.history.entity';
       password: 'Dev123!@#',
       database: 'dev-tokenprice',
       entities: [Price, PriceHistory],
-      synchronize: true,
+      synchronize: false,
       logging: false,
     }),
     PriceModule,
