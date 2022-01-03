@@ -1,10 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { PriceService } from './priceModule/price.service';
 import { PriceRequest } from './viewmodel/PriceRequest';
 import { PriceResponse } from './viewmodel/PriceResponse';
 
+@ApiTags('price')
 @Controller()
 export class AppController {
   constructor(
@@ -16,9 +23,9 @@ export class AppController {
 
   @Post('/getPrice')
   @ApiOperation({ summary: 'getPrice' })
-  getPrice(@Body() request: PriceRequest): PriceResponse {
+  async getPrice(@Body() request: PriceRequest): Promise<PriceResponse> {
     if (!request.symbol) {
-      return [];
+      throw new BadRequestException('symbol invalid');
     }
     return this.priceService.getPrice(request);
   }
