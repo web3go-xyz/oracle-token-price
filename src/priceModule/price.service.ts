@@ -50,6 +50,9 @@ export class PriceService {
           method: 'get',
           url: request_url,
         });
+        if (response && response.data) {
+          response = response.data;
+        }
         Logger.verbose(response);
 
         if (response && response[coin.coin_id]) {
