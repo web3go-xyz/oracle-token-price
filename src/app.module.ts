@@ -7,17 +7,18 @@ import { Price } from './priceModule/entity/price.entity';
 import { PriceModule } from './priceModule/price.module';
 import { PriceService } from './priceModule/price.service';
 import { PriceHistory } from './priceModule/entity/price.history.entity';
+import { dbConfig } from './dbConfig';
 
 @Module({
   imports: [
     StatusMonitorModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: '106.52.138.224',
-      port: 5432,
-      username: 'postgres',
-      password: 'Dev123!@#',
-      database: 'dev-tokenprice',
+      type: dbConfig.type as any,
+      host: dbConfig.host,
+      port: dbConfig.port,
+      username: dbConfig.username,
+      password: dbConfig.password,
+      database: dbConfig.database,
       entities: [Price, PriceHistory],
       synchronize: false,
       logging: false,
