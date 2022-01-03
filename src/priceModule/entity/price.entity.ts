@@ -24,7 +24,7 @@ export class Price {
 
   @Column({
     comment: 'last update time',
-    type: 'bigint',
+    nullable: true,
   })
   last_update_time: Date;
 }

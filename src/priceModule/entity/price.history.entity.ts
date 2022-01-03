@@ -24,7 +24,7 @@ export class PriceHistory {
 
   @Column({
     comment: 'time of price',
-    type: 'bigint',
+    nullable: true,
   })
   price_time: Date;
 }
