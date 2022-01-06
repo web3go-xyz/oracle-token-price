@@ -8,6 +8,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { PriceService } from './priceModule/price.service';
+import { PriceByTimeRangeRequest } from './viewmodel/PriceByTimeRangeRequest';
 import { PriceRequest } from './viewmodel/PriceRequest';
 import { PriceResponse } from './viewmodel/PriceResponse';
 
@@ -27,6 +28,17 @@ export class AppController {
     if (!request.symbol) {
       throw new BadRequestException('symbol invalid');
     }
+    return this.priceService.getPrice(request);
+  }
+  @Post('/getPriceByTimeRange')
+  @ApiOperation({ summary: 'getPriceByTimeRange' })
+  async getPriceByTimeRange(
+    @Body() request: PriceByTimeRangeRequest,
+  ): Promise<PriceResponse> {
+    if (!request.symbol) {
+      throw new BadRequestException('symbol invalid');
+    }
+
     return this.priceService.getPrice(request);
   }
 }
