@@ -3,6 +3,6 @@ export const dbConfig = {
   host: '106.52.138.224',
   port: 5432,
   username: 'postgres',
-  password: 'Dev123!@#',
+  password: 'dev!@#2022postgres',
   database: 'dev-tokenprice',
 };
