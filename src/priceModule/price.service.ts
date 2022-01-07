@@ -6,6 +6,8 @@ import { Logger } from '@nestjs/common';
 import { PriceHistory } from './entity/price.history.entity';
 import { PriceResponse } from 'src/viewmodel/PriceResponse';
 import { PriceRequest } from 'src/viewmodel/PriceRequest';
+import { PriceByTimeRangeRequest } from 'src/viewmodel/PriceByTimeRangeRequest';
+import { PriceByTimeRangeResponse } from 'src/viewmodel/PriceByTimeRangeResponse';
 const axios = require('axios');
 
 @Injectable()
@@ -96,16 +98,30 @@ export class PriceService {
       return null;
     }
   }
+  async getPriceByTimeRange(request: PriceByTimeRangeRequest): Promise<PriceByTimeRangeResponse[]> {
+    let records = await this.priceHistoryRepository.find({
+      where: {
+        symbol: request.symbol.toUpperCase(),
+      },
+    });
+    records = records.filter(v => {
+      const time = new Date(v.price_time).getTime();
+      const startTime = new Date(request.startTime).getTime();
+      const endTime = new Date(request.endTime).getTime() + 86400000;
+      return time > startTime && time < endTime
+    })
+    return records;
+  }
 
   constructor(
     @InjectRepository(Price)
     private readonly priceRepository: Repository<Price>,
     @InjectRepository(PriceHistory)
     private readonly priceHistoryRepository: Repository<PriceHistory>,
-  ) {}
+  ) { }
 }
 export class FunctionExt {
-  constructor(parameters) {}
+  constructor(parameters) { }
 
   public static async sleep(delay) {
     return new Promise((resolve, reject) => {
