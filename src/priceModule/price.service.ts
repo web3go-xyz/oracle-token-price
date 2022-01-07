@@ -112,7 +112,33 @@ export class PriceService {
     })
     return records;
   }
-
+  // 添加token
+  async addToken(request: Price): Promise<boolean> {
+    let price = await this.priceRepository.save(request);
+    if (price) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // 修改token
+  async updateToken(request: Price): Promise<boolean> {
+    let price = await this.priceRepository.update(request.id, request);
+    if (price) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // 删除token
+  async removeToken(id: number): Promise<boolean> {
+    let result = await this.priceRepository.delete(id);
+    if (result.affected) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   constructor(
     @InjectRepository(Price)
     private readonly priceRepository: Repository<Price>,

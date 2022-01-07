@@ -2,11 +2,14 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
+import { Price } from './priceModule/entity/price.entity';
 import { PriceService } from './priceModule/price.service';
 import { PriceByTimeRangeRequest } from './viewmodel/PriceByTimeRangeRequest';
 import { PriceByTimeRangeResponse } from './viewmodel/PriceByTimeRangeResponse';
@@ -31,6 +34,7 @@ export class AppController {
     }
     return this.priceService.getPrice(request);
   }
+
   @Post('/getPriceByTimeRange')
   @ApiOperation({ summary: 'getPriceByTimeRange' })
   async getPriceByTimeRange(
@@ -41,5 +45,39 @@ export class AppController {
     }
 
     return this.priceService.getPriceByTimeRange(request);
+  }
+  @Post('/addToken')
+  @ApiOperation({ summary: 'add token' })
+  async addToken(
+    @Body() request: Price,
+  ): Promise<boolean> {
+    if (!request.symbol) {
+      throw new BadRequestException('symbol invalid');
+    }
+
+    return this.priceService.addToken(request);
+
+  }
+
+  @Post('/updateToken')
+  @ApiOperation({ summary: 'update token' })
+  async updateToken(
+    @Body() request: Price,
+  ): Promise<boolean> {
+    if (!request.symbol) {
+      throw new BadRequestException('symbol invalid');
+    }
+
+    return this.priceService.updateToken(request);
+
+  }
+  @Delete('/removeToken/:id')
+  @ApiOperation({ summary: 'remove token' })
+  async removeToken(
+    @Param('id') id: number
+  ): Promise<boolean> {
+
+    return this.priceService.removeToken(id);
+
   }
 }
