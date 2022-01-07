@@ -10,7 +10,6 @@ import { AppService } from './app.service';
 import { PriceService } from './priceModule/price.service';
 import { PriceByTimeRangeRequest } from './viewmodel/PriceByTimeRangeRequest';
 import { PriceRequest } from './viewmodel/PriceRequest';
-import { PriceByTimeRangeRequest } from './viewmodel/PriceByTimeRangeRequest';
 import { PriceResponse } from './viewmodel/PriceResponse';
 
 @ApiTags('price')
