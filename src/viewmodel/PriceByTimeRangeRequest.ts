@@ -8,12 +8,12 @@ export class PriceByTimeRangeRequest {
   symbol: string;
   @ApiProperty({
     description: '开始时间',
-    default: '2020/1/5',
+    default: '2020/01/05',
   })
-  startTime: Date;
+  startTime: String;
   @ApiProperty({
     description: '结束时间',
-    default: '2020/1/6',
+    default: '2020/01/06',
   })
-  endTime: Date;
+  endTime: String;
 }

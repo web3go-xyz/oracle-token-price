@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Price } from './entity/price.entity';
 import { Logger } from '@nestjs/common';
 import { PriceHistory } from './entity/price.history.entity';
@@ -98,18 +98,14 @@ export class PriceService {
       return null;
     }
   }
+  // 根据时间段获取price历史
   async getPriceByTimeRange(request: PriceByTimeRangeRequest): Promise<PriceByTimeRangeResponse[]> {
     let records = await this.priceHistoryRepository.find({
       where: {
         symbol: request.symbol.toUpperCase(),
+        price_time: Between(request.startTime, request.endTime + ' 23:59:59')
       },
     });
-    records = records.filter(v => {
-      const time = new Date(v.price_time).getTime();
-      const startTime = new Date(request.startTime).getTime();
-      const endTime = new Date(request.endTime).getTime() + 86400000;
-      return time > startTime && time < endTime
-    })
     return records;
   }
   // 添加token
